@@ -1,10 +1,5 @@
 #!/bin/bash
 
-echo "[*] Enter domain to start brute forcing"
-echo "[*] Example: hackerone.com"
-echo
-read TARGET
-
 DIRTY_SUBDOMAINS="$HOME/BugBounty/$TARGET/dirty_DIRTY_Ds.txt"
 SUBDOMAINS="$HOME/BugBounty/$TARGET/DIRTY_Ds.txt"
 LIVE_TARGETS="$HOME/BugBounty/$TARGET/live_targets.txt"
@@ -15,6 +10,16 @@ SCRAPED_WORDLIST="$HOME/BugBounty/$TARGET/scraped_wordlist.txt"
 KEYS_WORDLIST="$HOME/BugBounty/$TARGET/keys_wordlist.txt"
 PATHS_WORDLIST="$HOME/BugBounty/$TARGET/paths_wordlist.txt"
 
+
+if [ "$EUID" -ne 0 ]; then
+    echo "You need to run this script as root in order to cleanup unessasary files."
+    exit
+else
+    echo "[*] Enter domain to start brute forcing"
+    echo "[*] Example: hackerone.com"
+    echo
+    read TARGET
+fi
 
 if [ -f $HOME/BugBounty/$TARGET  ]; then
     echo "$TARGET directory already exists" 
